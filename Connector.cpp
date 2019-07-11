@@ -231,7 +231,7 @@ int pConnect(const char* ip, const int port, std::string *buffer,
 			SOCKET eNobuffSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 			shutdown(eNobuffSocket, SD_BOTH);
 			closesocket(eNobuffSocket);
-			if (ENOBUFS == eNobuffSocket || ENOMEM == eNobuffSocket) {
+			if (ENOBUFS == errno || ENOMEM == errno) {
 				stt->doEmitionRedFoundData("Insufficient buffer/memory space. Sleeping for 10 sec...");
 				Sleep(10000);
 			}
@@ -519,7 +519,7 @@ bool portCheck(const char * sDVRIP, int wDVRPort) {
 				SOCKET eNobuffSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 				shutdown(eNobuffSocket, SD_BOTH);
 				closesocket(eNobuffSocket);
-				if (ENOBUFS == eNobuffSocket || ENOMEM == eNobuffSocket) {
+				if (ENOBUFS == errno || ENOMEM == errno) {
 					stt->doEmitionRedFoundData("Insufficient buffer/memory space. Sleeping for 10 sec...");
 					Sleep(10000);
 				}
