@@ -113,7 +113,7 @@ char *_findLast(char *str, char *delim)
 	return (char *)(str + savedPosition);
 }
 
-char *getCodePage(const char *str)
+const char* getCodePage(const char *str)
 {
 	static char cdpg[32] = {0};
 	char *ptr1 = strstri(str, "charset=");
