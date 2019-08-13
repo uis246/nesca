@@ -58,15 +58,14 @@ std::string getLocation(const std::string *buff) {
 }
 
 void setNewIP(const char *ipOrig, char *ip, std::string *buff, int size) {
-	strncpy(ip, ipOrig, size);
 	const std::string &location = getLocation(buff);
 	if (location.size() > 0) {
 		if (Utils::ustrstr(location, "http") != -1) {
 			strncpy(ip, location.c_str(), size);
 		}
 		else {
-			int ipLength = (int)strstr(ipOrig + 8, "/");
-			if (0 != ipLength) {
+			size_t ipLength = (strstr(ipOrig + 8, "/")-ipOrig);
+			if (ipLength) {
 				strncpy(ip, ipOrig, ipLength);
 				strncat(ip, location.c_str(), size - ipLength);
 			}
@@ -74,7 +73,7 @@ void setNewIP(const char *ipOrig, char *ip, std::string *buff, int size) {
 				strncat(ip, location.c_str(), size);
 			}
 		}
-	}
+	}else strncpy(ip, ipOrig, size);
 }
 
 lopaStr BA::BABrute(const char *ipOrig, const int port, bool performDoubleCheck) {

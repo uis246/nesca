@@ -493,6 +493,7 @@ int sharedDetector(const char * ip, int port, const std::string *buffcpy, const 
 	if (Utils::ustrstr(buffcpy, "airos_logo") != -1)									return 61; //AirOS (http://103.5.73.114/login.cgi?uri=/)
 	if (Utils::ustrstr(buffcpy, "NetSuveillanceWebCookie") != -1 && 
 		Utils::ustrstr(buffcpy, "resizeL") != -1)										return 62; //XMSECU (http://121.72.179.76/Login.htm)
+	if(port==25565)																		return 63; // Minecraft
 	
 	//if (Utils::ustrstr(buffcpy, "ShareCenter") != -1)									return 58; //ShareCenter (http://49.50.207.6/)
 
@@ -1354,7 +1355,7 @@ void _specFillerRSTP(const char *ip, int port, const char *finalstr, const char 
 //    };
 //}
 
-void _specWEBIPCAMBrute(const char *ip, int port, char *finalstr, int flag, char *comment, char *cp, int size, char *SPEC, std::string *cookie)
+void _specWEBIPCAMBrute(const char *ip, int port, const char *finalstr, int flag, const char *comment, char *cp, int size, const char *SPEC, std::string *cookie)
 {
 	IPC ipc;
     lopaStr lps = ipc.IPCLobby(ip, port, SPEC, cookie);
@@ -3328,6 +3329,13 @@ void parseFlag(int flag, char* ip, char *ipRaw, int port, std::string *buff, con
 	else if (flag == 62) //XMSECU
 	{
 		_specWEBIPCAMBrute(ip, port, "[XMSECU] WEB IP Camera", flag, "WEB Authorization", cp, size, "XMSECU", &cookie);
+	}
+	else if (flag == 63) //Minecraft
+	{
+		++PieOther;
+		++other;
+		putInFile(1, ip, port, sizeof("[Minecraft]"), "[Minecraft]", cp);
+		return;
 	}
 	
 	else if (flag == 20) //AXIS Camera

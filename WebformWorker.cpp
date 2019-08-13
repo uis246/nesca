@@ -69,7 +69,8 @@ lopaStr WFClass::doGetCheck(const char *ip,
             if(!globalScanFlag) break;
             strcpy(pass, wfPassLst[j]);
 
-            int rSize = strlen(ip) + strlen(actionVal) + strlen(userVal) + strlen(login) + strlen(passVal) + strlen(pass) + 4;
+			#pragma message "WFT?"
+			size_t rSize = strlen(ip) + strlen(actionVal) + strlen(userVal) + strlen(login) + strlen(passVal) + strlen(pass) + 4;
 
             if(rSize > 256) {
                 stt->doEmitionRedFoundData("[WF] Wrong request size! (" + QString(ip) + ":" + QString::number(port) + ")");
@@ -86,7 +87,6 @@ lopaStr WFClass::doGetCheck(const char *ip,
 			rowIndex = Utils::addBARow(QString(ip), QString(login) + ":" + QString(pass), QString::number((++passCounter / (double)(MaxWFPass*MaxWFLogin)) * 100).mid(0, 4) + "%", rowIndex);
 
             result = parseResponse(ip, port, &buffer, formVal, login, pass);
-            if(i == 0) ++i;
         }
         firstCycle = 1;
     }
@@ -119,7 +119,8 @@ lopaStr WFClass::doPostCheck(const char *ip,
             if(!globalScanFlag) break;
             strcpy(pass, wfPassLst[j]);
 
-            int rSize = strlen(ip) + strlen(actionVal) + strlen(userVal) + strlen(login) + strlen(passVal) + strlen(pass) + 4;
+			#pragma message "WFT?"
+			size_t rSize = strlen(ip) + strlen(actionVal) + strlen(userVal) + strlen(login) + strlen(passVal) + strlen(pass) + 4;
 
             if(rSize > 256) {
                 stt->doEmitionRedFoundData("[WF] Wrong request size! (" + QString(ip) + ":" + QString::number(port) + ")");
@@ -139,7 +140,6 @@ lopaStr WFClass::doPostCheck(const char *ip,
             ++passCounter;
 
             return parseResponse(ip, port, &buffer, formVal, login, pass);
-            if(i == 0) ++i;
         }
         firstCycle = 1;
     }
