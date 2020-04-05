@@ -3,7 +3,6 @@
 debugData.txt
 *.png
 adns_dll.dll
-changelog
 *.obj
 *.res
 *.log
@@ -11,14 +10,11 @@ changelog
 *.lastbuildstate
 *.pdb
 GeneratedFiles/*
-imp.txt
-imp2.txt
 *.dll
 logs/*
 *.vcxproj.*
 *.vcxproj
 *.aps
-*.svg
 Release/*
 Debug/*
 restore
@@ -27,8 +23,6 @@ result_files/*
 *.bk
 
 tags.txt
-lisca.cpp
-main - копия.cpp
 result_files-*
 *.BACKUP.*
 *.LOCAL.*
