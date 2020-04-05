@@ -99,23 +99,23 @@ char *_findFirst(const char *str, char *delim)
 
 char *_findLast(char *str, char *delim)
 {
-	int sz = strlen(str);
-	int dsz = strlen(delim);
+	size_t sz = strlen(str);
+	size_t dsz = strlen(delim);
 	int savedPosition = 0;
 	for(int i = 0; i < sz; ++i)
 	{
 		for(int j = 0; j < dsz; ++j)
 		{
 			if(str[i] == delim[j]) savedPosition = i;
-		};
-	};
+		}
+	}
 
 	return (char *)(str + savedPosition);
 }
 
-const char* getCodePage(const char *str)
+void getCodePage(const char *str, char* cp)
 {
-	static char cdpg[32] = {0};
+	static char cdpg[32];
 	char *ptr1 = strstri(str, "charset=");
 
 	if (ptr1 != NULL)
@@ -124,16 +124,22 @@ const char* getCodePage(const char *str)
 		if (temp3 != NULL)
 		{
 			int ln = (int)(temp3 - ptr1 - 8);
-			if (ln > 16) return "WTF?";
-			strncpy(cdpg, (char *)(ptr1 + 8), (ln > 32) ? 32 : ln);
-			if (strstri(cdpg, "%s") != NULL) return "UTF-8";
-			return cdpg;
+			if (ln > 16)
+				strcpy(cp, "WTF?");
+			else{
+				strncpy(cdpg, (char *)(ptr1 + 8), (ln > 32) ? 32 : ln);
+				if (strstri(cdpg, "%s") != NULL)
+					strcpy(cp, "UTF-8");
+				else
+					strcpy(cp, cdpg);
+			}
 		}
 		else
 		{
 			stt->doEmitionRedFoundData("[GetCodePage] [" + QString(temp3).mid(0, 16) + "]");
-			return "NULL";
-		};
+			strcpy(cp, "NULL");
+		}
+		return;
 	}
 
 	ptr1 = strstri(str, "<meta ");
@@ -146,16 +152,22 @@ const char* getCodePage(const char *str)
 			if(temp4 != NULL)
 			{
                 int ln = (int)(temp4 - ptr2 - 8);
-				if(ln > 16) return "WTF?";
-                strncpy(cdpg, (char *)(ptr2 + 8), (ln > 32) ? 32 : ln );
-				if(strstri(cdpg, "%s") != NULL) return "UTF-8";
-				return cdpg;
+				if(ln > 16)
+					strcpy(cp, "WTF?");
+				else{
+					strncpy(cdpg, (char *)(ptr2 + 8), (ln > 32) ? 32 : ln );
+					if(strstri(cdpg, "%s") != NULL)
+						strcpy(cp, "UTF-8");
+					else
+						strcpy(cp, cdpg);
+				}
 			}
 			else
 			{
                 stt->doEmitionRedFoundData("[GetCodePage] [" + QString(ptr2).mid(0, 16) + "]");
-                return "NULL";
-			};
+				strcpy(cp, "NULL");
+			}
+			return;
         }
 
         ptr2 = strstri(ptr1 + 6, "charset = ");
@@ -165,16 +177,22 @@ const char* getCodePage(const char *str)
 			if(temp4 != NULL)
 			{
                 int ln = (int)(temp4 - ptr2 - 10);
-				if(ln > 16) return "WTF?";
-                strncpy(cdpg, (char *)(ptr2 + 10), (ln > 32) ? 32 : ln );
-				if(strstri(cdpg, "%s") != NULL) return "UTF-8";
-				return cdpg;
+				if(ln > 16)
+					strcpy(cp, "WTF?");
+				else{
+					strncpy(cdpg, (char *)(ptr2 + 10), (ln > 32) ? 32 : ln );
+					if(strstri(cdpg, "%s") != NULL)
+						strcpy(cp, "UTF-8");
+					else
+						strcpy(cp, cdpg);
+				}
 			}
 			else
 			{
                 stt->doEmitionRedFoundData("[GetCodePage] [" + QString(ptr2).mid(0, 16) + "]");
-                return "NULL";
-			};
+				strcpy(cp, "NULL");
+			}
+			return;
         }
 
         ptr2 = strstri(ptr1 + 6, "charset =");
@@ -184,16 +202,22 @@ const char* getCodePage(const char *str)
 			if(temp4 != NULL)
 			{
                 int ln = (int)(temp4 - ptr2 - 9);
-				if(ln > 16) return "WTF?";
-                strncpy(cdpg, (char *)(ptr2 + 9), (ln > 32) ? 32 : ln );
-				if(strstri(cdpg, "%s") != NULL) return "UTF-8";
-				return cdpg;
+				if(ln > 16)
+					strcpy(cp, "WTF?");
+				else{
+					strncpy(cdpg, (char *)(ptr2 + 9), (ln > 32) ? 32 : ln );
+					if(strstri(cdpg, "%s") != NULL)
+						strcpy(cp, "UTF-8");
+					else
+						strcpy(cp, cdpg);
+				}
 			}
 			else
 			{
                 stt->doEmitionRedFoundData("[GetCodePage] [" + QString(ptr2).mid(0, 16) + "]");
-                return "NULL";
-			};
+				strcpy(cp, "NULL");
+			}
+			return;
 		}
 		else
 		{
@@ -204,21 +228,26 @@ const char* getCodePage(const char *str)
 				if(temp3 != NULL)
 				{
                     int ln = (int)(temp3 - temp2 - 8);
-					if(ln > 16) return "WTF?";
-                    strncpy(cdpg, (char *)(temp2 + 8), (ln > 32) ? 32 : ln );
-					if(strstri(cdpg, "%s") != NULL) return "UTF-8";
-					return cdpg;
+					if(ln > 16)
+						strcpy(cp, "WTF?");
+					else{
+						strncpy(cdpg, (char *)(temp2 + 8), (ln > 32) ? 32 : ln );
+						if(strstri(cdpg, "%s") != NULL)
+							strcpy(cp, "UTF-8");
+						else
+							strcpy(cp, cdpg);
+					}
 				}
 				else
 				{
 					stt->doEmitionRedFoundData("[GetCodePage] [" + QString(temp3).mid(0, 16) + "]");
-                    return "NULL";
+					strcpy(cp, "NULL");
 				}
 			}
-			else return "NULL";
-		};	
+			else strcpy(cp, "NULL");
+		}return;
 	}
-	else return "NULL";
+	else strcpy(cp, "NULL");
 }
 
 bool isNegative(const std::string *buff, const char *ip, int port, const char *cp)
@@ -3575,7 +3604,7 @@ int Lexems::filler(char* ip, char *ipRaw, int port, std::string *buffcpy, int si
 		const std::string &location = handleRedirects(buffcpy, ip, port);
 
 		char cp[32];
-		strncpy(cp, getCodePage(buffcpy->c_str()), 32);
+		getCodePage(buffcpy->c_str(), cp);
 		int flag = contentFilter((const std::string *) buffcpy, port, (location.size() > 0 ? location.c_str() : ip), cp, size);
 		if (flag != -1) {
 			const std::string &header = getHeader((const std::string *) buffcpy, flag);
