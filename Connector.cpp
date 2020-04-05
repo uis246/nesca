@@ -179,7 +179,7 @@ int pConnect(const char* ip, const int port, std::string *buffer,
 
 		if (postData != nullptr) curl_easy_setopt(curl, CURLOPT_POSTFIELDS, postData);
 
-		if (customHeaders != NULL) {
+		if (customHeaders != nullptr) {
 
 			struct curl_slist *chunk = NULL;
 			for (auto &ch : *customHeaders) chunk = curl_slist_append(chunk, ch.c_str());

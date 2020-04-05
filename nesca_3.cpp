@@ -2594,7 +2594,7 @@ std::string GetVer()
 	} else {
 		stt->doEmitionRedFoundData("Cannot open version file.");
 		return "?";
-	};
+	}
 #endif
 }
 
